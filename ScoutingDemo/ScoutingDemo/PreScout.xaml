@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ScoutingDemo.PreScout"
+             Title="Pre-Scout">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <Picker x:Name="pckName" HorizontalOptions="CenterAndExpand" 
+                        Title="Pick Name" Margin="20" WidthRequest="200" FontSize="30"/>
+                <Picker x:Name="pckTeam" HorizontalOptions="CenterAndExpand" 
+                        Title="Pick Team" Margin="20" WidthRequest="200" FontSize="30"/>
+                <Picker x:Name="pckAlliance" HorizontalOptions="CenterAndExpand" 
+                        Title="Pick Alliance" Margin="20" WidthRequest="200" FontSize="30"/>
+                <Entry x:Name="entMatch" Placeholder="Match Number" Keyboard="Numeric" FontSize="30" 
+                       HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" WidthRequest="200"
+                       Margin="30"/>
+                <Button x:Name="btnNext" HorizontalOptions="CenterAndExpand" 
+                    Text="Next" HeightRequest="75" WidthRequest="200" FontSize="30" 
+                    IsEnabled="False" Margin="30" BackgroundColor="LightGreen" 
+                    TextColor="Black" CornerRadius="10" IsVisible="false"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
