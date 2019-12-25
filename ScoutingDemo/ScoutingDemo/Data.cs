@@ -7,7 +7,8 @@ namespace ScoutingDemo
     class Data
     {
         public String SelectedName { get; set; }
-        public int SelectedTeam { get; set; }
+        public int SelectedStation { get; set; }
+        public static String SelectedTeam { get; set; }
         public String SelectedAlliance { get; set; }
         public int MatchNumber { get; set; }
         public String StartingPiece { get; set; }

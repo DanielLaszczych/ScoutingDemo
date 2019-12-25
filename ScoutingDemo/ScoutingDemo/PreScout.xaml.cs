@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using com.tweirtx.TBAAPIv3client.Api;
+using com.tweirtx.TBAAPIv3client.Client;
+using com.tweirtx.TBAAPIv3client.Model;
+using System.Diagnostics;
 
 namespace ScoutingDemo
 {
@@ -26,10 +30,11 @@ namespace ScoutingDemo
         };
 
         private bool hasName;
-        private bool hasTeam;
+        private bool hasStation;
         private bool hasAlliance;
         private bool hasMatch;
-
+        List<Match> result;
+        EventApi apiInstance;
         internal static Data Data { get; set; }
 
         public PreScout()
@@ -37,7 +42,7 @@ namespace ScoutingDemo
             Data = new Data();
             InitializeComponent();
             hasName = false;
-            hasTeam = false;
+            hasStation = false;
             hasAlliance = false;
             hasMatch = false;
             InitializeControls();
@@ -46,15 +51,19 @@ namespace ScoutingDemo
 
         private void InitializeControls()
         {
+            Configuration.Default.BasePath = "https://www.thebluealliance.com/api/v3";
+            // Configure API key authorization: apiKey
+            Configuration.Default.ApiKey.Add("X-TBA-Auth-Key", "musbVwh0cZWMT9y41ZaUTNjVnybkLpZZyyEQkHsD0FIXk0FL4OoFboVVGrKVukXf");
+            apiInstance = new EventApi();
+            result = apiInstance.GetEventMatches("2019nyny");
             foreach (string s in names)
             {
                 pckName.Items.Add(s);
             }
 
-            foreach (int i in teams)
-            {
-                pckTeam.Items.Add(i.ToString());
-            }
+            pckStation.Items.Add("1");
+            pckStation.Items.Add("2");
+            pckStation.Items.Add("3");
 
             pckAlliance.Items.Add("Red");
             pckAlliance.Items.Add("Blue");
@@ -69,22 +78,22 @@ namespace ScoutingDemo
                 }
             };
 
-            pckTeam.SelectedIndexChanged += (s, e) =>
-            {
-                if (pckTeam.SelectedIndex != -1)
-                {
-                    Data.SelectedTeam = Int32.Parse(pckTeam.Items[pckTeam.SelectedIndex]);
-                    hasTeam = true;
-                    enableButton();
-                }
-            };
-
             pckAlliance.SelectedIndexChanged += (s, e) =>
             {
                 if (pckAlliance.SelectedIndex != -1)
                 {
                     Data.SelectedAlliance = pckAlliance.Items[pckAlliance.SelectedIndex];
                     hasAlliance = true;
+                    enableButton();
+                }
+            };
+
+            pckStation.SelectedIndexChanged += (s, e) =>
+            {
+                if (pckStation.SelectedIndex != -1)
+                {
+                    Data.SelectedStation = Int32.Parse(pckStation.Items[pckStation.SelectedIndex]);
+                    hasStation = true;
                     enableButton();
                 }
             };
@@ -103,11 +112,23 @@ namespace ScoutingDemo
                 }
             };
 
+            btnNext.Clicked +=  (s, e) =>
+            {
+                var match = result.Find(x => x.MatchNumber == Data.MatchNumber && x.CompLevel == Match.CompLevelEnum.Qm);
+                if (Data.SelectedAlliance.Equals("Red"))
+                {
+                    Data.SelectedTeam = match.Alliances.Red.TeamKeys[Data.SelectedStation - 1].Substring(3);
+                }
+                else if (Data.SelectedAlliance.Equals("Blue"))
+                {
+                    Data.SelectedTeam = match.Alliances.Blue.TeamKeys[Data.SelectedStation - 1].Substring(3);
+                }
+            };
         }
 
         private void enableButton()
         {
-            if (hasName & hasTeam & hasAlliance & hasMatch)
+            if (hasName & hasStation & hasAlliance & hasMatch)
             {
                 btnNext.IsEnabled = true;
                 btnNext.IsVisible = true;

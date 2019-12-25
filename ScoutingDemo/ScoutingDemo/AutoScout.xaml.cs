@@ -15,6 +15,12 @@ namespace ScoutingDemo
         public AutoScout()
         {
             InitializeComponent();
+            InitializeControls();
+        }
+
+        private void InitializeControls()
+        {
+            team.Text = Data.SelectedTeam;
         }
     }
 }

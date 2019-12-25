@@ -10,12 +10,12 @@
         <ScrollView>
             <StackLayout Padding="20">
                 <Picker x:Name="pckName" HorizontalOptions="CenterAndExpand" 
-                        Title="Pick Name" Margin="20" WidthRequest="200" FontSize="30"/>
-                <Picker x:Name="pckTeam" HorizontalOptions="CenterAndExpand" 
-                        Title="Pick Team" Margin="20" WidthRequest="200" FontSize="30"/>
+                        Title="Pick Name" Margin="20" WidthRequest="200" FontSize="20"/>
                 <Picker x:Name="pckAlliance" HorizontalOptions="CenterAndExpand" 
-                        Title="Pick Alliance" Margin="20" WidthRequest="200" FontSize="30"/>
-                <Entry x:Name="entMatch" Placeholder="Match Number" Keyboard="Numeric" FontSize="30" 
+                        Title="Pick Alliance" Margin="20" WidthRequest="200" FontSize="20"/>
+                <Picker x:Name="pckStation" HorizontalOptions="CenterAndExpand" 
+                        Title="Pick Alliance Station" Margin="20" WidthRequest="200" FontSize="20"/>
+                <Entry x:Name="entMatch" Placeholder="Match Number" Keyboard="Numeric" FontSize="20" 
                        HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" WidthRequest="200"
                        Margin="30"/>
                 <Button x:Name="btnNext" HorizontalOptions="CenterAndExpand" 
