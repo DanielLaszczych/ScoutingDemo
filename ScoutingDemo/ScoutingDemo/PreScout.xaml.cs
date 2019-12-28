@@ -10,6 +10,9 @@ using com.tweirtx.TBAAPIv3client.Api;
 using com.tweirtx.TBAAPIv3client.Client;
 using com.tweirtx.TBAAPIv3client.Model;
 using System.Diagnostics;
+using SQLite;
+using System.IO;
+using SQLiteNetExtensions.Attributes;
 
 namespace ScoutingDemo
 {
@@ -48,14 +51,51 @@ namespace ScoutingDemo
             InitializeControls();
             btnNext.Clicked += async (s, e) => await Navigation.PushAsync(new AutoScout(), true);
         }
-
+        [Table("ContactInfo")]
+        public class EventInfo
+        {
+            [PrimaryKey, AutoIncrement]
+            public int Id { get; set; }
+            public int? matchNum { get; set; }
+            [TextBlob("MatchesBlobbed")]
+            public List<Match> matches { get; set; }
+        }
         private void InitializeControls()
         {
+            var sqliteFilename = "MyDatabase.db3";
+            string libraryPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            var path = Path.Combine(libraryPath, sqliteFilename);
+
+
             Configuration.Default.BasePath = "https://www.thebluealliance.com/api/v3";
             // Configure API key authorization: apiKey
             Configuration.Default.ApiKey.Add("X-TBA-Auth-Key", "musbVwh0cZWMT9y41ZaUTNjVnybkLpZZyyEQkHsD0FIXk0FL4OoFboVVGrKVukXf");
             apiInstance = new EventApi();
             result = apiInstance.GetEventMatches("2019nyny");
+            var db = new SQLiteConnection(path);
+            db.CreateTable<EventInfo>();
+            foreach (Match m in result)
+            {
+                if (m.CompLevel == Match.CompLevelEnum.Qm)
+                {
+                    var newMatch = new EventInfo();
+                    newMatch.matchNum = m.MatchNumber;
+                    newMatch.red1 = m.Alliances.Red.TeamKeys[0];
+                    newMatch.red2 = m.Alliances.Red.TeamKeys[1];
+                    newMatch.red3 = m.Alliances.Red.TeamKeys[2];
+                    newMatch.blue1 = m.Alliances.Blue.TeamKeys[0];
+                    newMatch.blue2 = m.Alliances.Blue.TeamKeys[1];
+                    newMatch.blue3 = m.Alliances.Blue.TeamKeys[2];
+                    db.Insert(newMatch);
+                }
+            }
+
+
+            var matchList = db.Table<EventInfo>();
+            foreach (var s in matchList)
+            {
+                 Console.WriteLine(s.matchNum + " Red 1: " + s.red1);
+            }
             foreach (string s in names)
             {
                 pckName.Items.Add(s);

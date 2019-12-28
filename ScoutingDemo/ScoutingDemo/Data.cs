@@ -1,4 +1,6 @@
-﻿using System;
+﻿using com.tweirtx.TBAAPIv3client.Model;
+using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
