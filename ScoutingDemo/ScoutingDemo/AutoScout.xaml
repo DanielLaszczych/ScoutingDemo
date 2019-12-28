@@ -8,14 +8,107 @@
              Title="Auto">
     <ContentPage.Content>
         <ScrollView>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-            </Grid>
+            <StackLayout x:Name="Layout">
+
+                <Picker x:Name="pckPosition" Title="Starting Position" HorizontalOptions="Center" Margin="0, 20, 0, 0"/>
+                
+                <Label x:Name="firstLabel" Text="Starting game piece:" Margin="25, 20, 0, 0" HorizontalTextAlignment="Start" HorizontalOptions="Start"/>
+
+                <Grid HorizontalOptions="CenterAndExpand" Margin="0, 20, 0, 0" ColumnSpacing="20" RowSpacing="25">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btnHatch" Grid.Row="0"  Grid.Column="0" BackgroundColor="Yellow" 
+                            TextColor="Black" Text="Hatch" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+                    <Button x:Name="btnCargo" Grid.Row="0"  Grid.Column="1" BackgroundColor="Orange" 
+                            TextColor="Black" Text="Cargo" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+                    <Button x:Name="btnNone" Grid.Row="0"  Grid.Column="2" BackgroundColor="Gray" 
+                            TextColor="Black" Text="None" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+
+                </Grid>
+
+                <Label x:Name="secondLabel" Text="Moved off the HAB zone:" HorizontalTextAlignment="Start" Margin="25, 20, 0, 20"/>
+
+                <Grid HorizontalOptions="CenterAndExpand" ColumnSpacing="20" RowSpacing="25">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btnYesHAB" Grid.Row="0"  Grid.Column="0" BackgroundColor="Green" 
+                            TextColor="Black" Text="Yes" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+                    <Button x:Name="btnNoHAB" Grid.Row="0"  Grid.Column="1" BackgroundColor="Red" 
+                            TextColor="Black" Text="No" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+
+                </Grid>
+
+                <Label x:Name="thirdLabel" Text="Where was the game piece scored:" HorizontalTextAlignment="Start" Margin="25, 20, 0, 0"/>
+
+                <Grid HorizontalOptions="CenterAndExpand" Margin="0, 20, 0, 0" ColumnSpacing="20" RowSpacing="25">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btnCargoShip" Grid.Row="0"  Grid.Column="0" BackgroundColor="Yellow" 
+                            TextColor="Black" Text="Cargo Ship" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+                    <Button x:Name="btnRocketShip" Grid.Row="0"  Grid.Column="1" BackgroundColor="Orange" 
+                            TextColor="Black" Text="Rocket Ship" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+
+                </Grid>
+
+                <Grid HorizontalOptions="Center" Margin="0, 5, 0, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btnNoneShip" Grid.Row="0"  Grid.Column="0" BackgroundColor="Gray" 
+                            TextColor="Black" Text="None" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+
+                </Grid>
+
+                <Grid x:Name="LastGrid" HorizontalOptions="CenterAndExpand" Margin="0, 20, 0, 20" ColumnSpacing="20" RowSpacing="25">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Picker x:Name="pckConfirmSecond" Grid.Row="0" Grid.Column="0" 
+                            Grid.ColumnSpan="1" Title="2nd Piece?" IsEnabled="false" IsVisible="false"/>
+                    <Picker x:Name="pckSecondShip" Grid.Row="0" Grid.Column="1" 
+                            Grid.ColumnSpan="1" Title="Scored Where?" IsEnabled="false" IsVisible="false"/>
+
+                </Grid>
+
+                <Button x:Name="btnNextAuto" HorizontalOptions="Center" 
+                    Text="Next" IsEnabled="false" BackgroundColor="LightGreen" 
+                    TextColor="Black" CornerRadius="10" IsVisible="false" Margin="10"/>
+            </StackLayout>
+                
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

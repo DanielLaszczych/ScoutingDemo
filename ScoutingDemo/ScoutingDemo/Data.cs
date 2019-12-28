@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ScoutingDemo
 {
-    class Data
+    public class Data
     {
         public String SelectedName { get; set; }
         public int SelectedTeam { get; set; }

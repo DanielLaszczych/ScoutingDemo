@@ -23,6 +23,10 @@ namespace ScoutingDemo.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            App.screenWidth = (int)UIScreen.MainScreen.Bounds.Width;
+            App.screenHeight = (int)UIScreen.MainScreen.Bounds.Height;
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

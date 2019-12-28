@@ -30,18 +30,43 @@ namespace ScoutingDemo
         private bool hasAlliance;
         private bool hasMatch;
 
-        internal static Data Data { get; set; }
-
         public PreScout()
         {
-            Data = new Data();
             InitializeComponent();
             hasName = false;
             hasTeam = false;
             hasAlliance = false;
             hasMatch = false;
+            DynamicSizing();
             InitializeControls();
-            btnNext.Clicked += async (s, e) => await Navigation.PushAsync(new AutoScout(), true);
+            btnNextPre.Clicked += async (s, e) =>
+            {
+                HomePage.data.SelectedName = pckName.Items[pckName.SelectedIndex];
+                HomePage.data.SelectedAlliance = pckAlliance.Items[pckAlliance.SelectedIndex];
+                HomePage.data.SelectedTeam = Int32.Parse(pckTeam.Items[pckTeam.SelectedIndex]);
+                HomePage.data.MatchNumber = Int32.Parse(entMatch.Text);
+                await Navigation.PushAsync(HomePage.autoScout, true);
+            };
+        }
+
+        private void DynamicSizing()
+        {
+            Layout.Spacing = (App.screenHeight * 4) / 100;
+            pckName.HeightRequest = (App.screenHeight * 10) / 100;
+            pckName.WidthRequest = (App.screenWidth * 70) / 100;
+            pckName.FontSize = (App.screenWidth * 8) / 100;
+            pckTeam.HeightRequest = (App.screenHeight * 10) / 100;
+            pckTeam.WidthRequest = (App.screenWidth * 70) / 100;
+            pckTeam.FontSize = (App.screenWidth * 8) / 100;
+            pckAlliance.HeightRequest = (App.screenHeight * 10) / 100;
+            pckAlliance.WidthRequest = (App.screenWidth * 70) / 100;
+            pckAlliance.FontSize = (App.screenWidth * 8) / 100;
+            entMatch.HeightRequest = (App.screenHeight * 10) / 100;
+            entMatch.WidthRequest = (App.screenWidth * 70) / 100;
+            entMatch.FontSize = (App.screenWidth * 8) / 100;
+            btnNextPre.HeightRequest = (App.screenHeight * 10) / 100;
+            btnNextPre.WidthRequest = (App.screenWidth * 70) / 100;
+            btnNextPre.FontSize = (App.screenWidth * 8) / 100;
         }
 
         private void InitializeControls()
@@ -63,7 +88,6 @@ namespace ScoutingDemo
             {
                 if (pckName.SelectedIndex != -1)
                 {
-                    Data.SelectedName = pckName.Items[pckName.SelectedIndex];
                     hasName = true;
                     enableButton();
                 }
@@ -73,7 +97,6 @@ namespace ScoutingDemo
             {
                 if (pckTeam.SelectedIndex != -1)
                 {
-                    Data.SelectedTeam = Int32.Parse(pckTeam.Items[pckTeam.SelectedIndex]);
                     hasTeam = true;
                     enableButton();
                 }
@@ -83,7 +106,6 @@ namespace ScoutingDemo
             {
                 if (pckAlliance.SelectedIndex != -1)
                 {
-                    Data.SelectedAlliance = pckAlliance.Items[pckAlliance.SelectedIndex];
                     hasAlliance = true;
                     enableButton();
                 }
@@ -93,13 +115,12 @@ namespace ScoutingDemo
             {
                 if (!entMatch.Text.Equals(""))
                 {
-                    Data.MatchNumber = Int32.Parse(entMatch.Text);
                     hasMatch = true;
                     enableButton();
                 } else if (entMatch.Text.Equals("")) {
                     hasMatch = false;
-                    btnNext.IsEnabled = false;
-                    btnNext.IsVisible = false;
+                    btnNextPre.IsEnabled = false;
+                    btnNextPre.IsVisible = false;
                 }
             };
 
@@ -107,10 +128,10 @@ namespace ScoutingDemo
 
         private void enableButton()
         {
-            if (hasName & hasTeam & hasAlliance & hasMatch)
+            if (hasName && hasTeam && hasAlliance && hasMatch)
             {
-                btnNext.IsEnabled = true;
-                btnNext.IsVisible = true;
+                btnNextPre.IsEnabled = true;
+                btnNextPre.IsVisible = true;
             }
         }
 

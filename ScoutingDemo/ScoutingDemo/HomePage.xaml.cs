@@ -13,15 +13,29 @@ namespace ScoutingDemo
     [DesignTimeVisible(false)]
     public partial class HomePage : ContentPage
     {
+
+        public static PreScout preScout;
+        public static AutoScout autoScout;
+        public static Data data;
+
         public HomePage()
         {
             InitializeComponent();
             InitializeControl();
+            btnStart.HeightRequest = (App.screenHeight * 10) / 100;
+            btnStart.WidthRequest = (App.screenWidth * 50) / 100;
+            btnStart.FontSize = (App.screenWidth * 5) / 100;
         }
 
         private void InitializeControl()
         {
-            btnStart.Clicked += async(s, e) => await Navigation.PushAsync(new PreScout(), true);
+            btnStart.Clicked += async (s, e) =>
+            {
+                data = new Data();
+                preScout = new PreScout();
+                autoScout = new AutoScout();
+                await Navigation.PushAsync(preScout, true);
+            };
         }
     }
 }    

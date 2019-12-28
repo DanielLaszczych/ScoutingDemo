@@ -11,10 +11,8 @@
         <!-- Place new controls here -->
         <Button x:Name="btnStart" 
                 Text="Start Scouting" 
-                HorizontalOptions="Center"
+                HorizontalOptions="CenterAndExpand"
                 VerticalOptions="CenterAndExpand" 
-                FontSize="20" 
-                Padding="30" 
                 CornerRadius="10"
                 BackgroundColor="LightBlue"
                 TextColor="Black"/>
