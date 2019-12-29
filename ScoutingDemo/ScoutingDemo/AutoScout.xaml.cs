@@ -13,6 +13,8 @@ namespace ScoutingDemo
     public partial class AutoScout : ContentPage
     {
 
+        private TeleScout teleScout = null;
+
         private readonly List<String> positions = new List<string>
         {
             "Level 1- Right", "Level 1- Left", "Level 1- Center",
@@ -21,13 +23,13 @@ namespace ScoutingDemo
 
         private readonly List<String> gamePieces = new List<string>
         {
-            "Cargo", "Hatch Panel", "None"
+            "Cargo", "Hatch Panel", "Remove Row"
         };
 
         private readonly List<String> scoringPositions = new List<string>
         {
             "Cargoship Left", "Cargoship Front", "Cargoship Right",
-            "Rocketship Nearside", "Rocketship Farside"
+            "Rocketship Nearside", "Rocketship Farside", "None"
         };
 
         private List<String> scoredPieces = new List<String>();
@@ -44,14 +46,14 @@ namespace ScoutingDemo
 
         public AutoScout()
         {
+            InitializeComponent();
+            InitializeControls();
+            DynamicSizing();
             hasPosition = false;
             hasPiece = false;
             hasHAB = false;
             hasScoredPosition = false;
             hasAdditional = false;
-            InitializeComponent();
-            InitializeControls();
-            DynamicSizing();
         }
 
         private void DynamicSizing()
@@ -100,6 +102,21 @@ namespace ScoutingDemo
 
         private void InitializeControls()
         {
+
+            btnNextAuto.Clicked += async (s, e) =>
+            {
+                if (teleScout == null)
+                {
+                    teleScout = new TeleScout();
+                }
+                if (scoredPieces.Count == scoredPlaces.Count)
+                {
+                    HomePage.data.gamePiecesAuto = scoredPieces;
+                    HomePage.data.gamePlacesAuto = scoredPlaces;  
+                }
+                await Navigation.PushAsync(teleScout, true);
+            };
+
             foreach (String s in positions)
             {
                 pckPosition.Items.Add(s);
@@ -109,7 +126,7 @@ namespace ScoutingDemo
             {
                 pckConfirmSecond.Items.Add(s);
             }
-            pckConfirmSecond.Items.Remove("None");
+            pckConfirmSecond.Items.Remove("Remove Row");
             pckConfirmSecond.Items.Add("Finished");
 
             foreach (String s in scoringPositions)
@@ -298,6 +315,14 @@ namespace ScoutingDemo
                     if (pckConfirmSecond.Items[pckConfirmSecond.SelectedIndex].Equals("Finished"))
                     {
                         hasAdditional = true;
+                        if (scoredPieces.Count > 1)
+                        {
+                            scoredPieces.RemoveAt(1);
+                        }
+                        if (scoredPlaces.Count > 1)
+                        {
+                            scoredPlaces.RemoveAt(1);
+                        }
                         checkEndButton();
                     }
                     else
@@ -306,7 +331,7 @@ namespace ScoutingDemo
                         checkEndButton();
                     }
                 }
-                if (!pckConfirmSecond.Items[pckConfirmSecond.SelectedIndex].Equals("None") && !pckConfirmSecond.Items[pckConfirmSecond.SelectedIndex].Equals("Finished"))
+                if (!pckConfirmSecond.Items[pckConfirmSecond.SelectedIndex].Equals("Finished"))
                 {
                     pckSecondShip.IsVisible = true;
                     pckSecondShip.IsEnabled = true;
@@ -321,10 +346,13 @@ namespace ScoutingDemo
                     pckSecondShip.IsVisible = false;
                     pckSecondShip.IsEnabled = false;
                     pckSecondShip.SelectedIndex = -1;
-                    if (scoredPlaces.Count > 1 && scoredPieces.Count > 1)
+                    if (scoredPieces.Count > 1)
+                    {
+                        scoredPieces.RemoveAt(1);
+                    }
+                    if (scoredPlaces.Count > 1)
                     {
                         scoredPlaces.RemoveAt(1);
-                        scoredPieces.RemoveAt(1);
                     }
                 }
             };
@@ -361,12 +389,13 @@ namespace ScoutingDemo
         {
             RowDefinition row = new RowDefinition { Height = GridLength.Auto };
             LastGrid.RowDefinitions.Add(row);
+            string addon = (count > 3) ? "th Piece" : "rd Piece";
             Picker p1 = new Picker {
-                Title = count + "rd Piece",
+                Title = count + addon,
                 HeightRequest = (App.screenHeight * 7) / 100,
                 WidthRequest = (App.screenWidth * 37) / 100,
                 FontSize = (App.screenWidth * 5) / 100
-        };
+            };
             count++;
             foreach (String s in gamePieces)
             {
@@ -400,6 +429,15 @@ namespace ScoutingDemo
                     if (p1.Items[p1.SelectedIndex].Equals("Finished"))
                     {
                         hasAdditional = true;
+                        p2.IsEnabled = false;
+                        p2.IsVisible = false;
+                        p2.SelectedIndex = -1;
+                        int rowToCheck = Grid.GetRow(p1) + 1;
+                        if (scoredPlaces.Count > rowToCheck && scoredPieces.Count > rowToCheck)
+                        {
+                            scoredPlaces.RemoveAt(rowToCheck);
+                            scoredPieces.RemoveAt(rowToCheck);
+                        }
                         checkEndButton();
                     }
                     else
@@ -408,7 +446,7 @@ namespace ScoutingDemo
                         checkEndButton();
                     }
                 }
-                if (!p1.Items[p1.SelectedIndex].Equals("None") && !p1.Items[p1.SelectedIndex].Equals("Finished"))
+                if (!p1.Items[p1.SelectedIndex].Equals("Remove Row") && !p1.Items[p1.SelectedIndex].Equals("Finished"))
                 {
                     if (scoredPieces.Count > (Grid.GetRow(p1) + 1))
                     {
@@ -418,7 +456,7 @@ namespace ScoutingDemo
                     p2.IsVisible = true;
                     p2.IsEnabled = true;
                 }
-                else if (p1.Items[p1.SelectedIndex].Equals("None"))
+                else if (p1.Items[p1.SelectedIndex].Equals("Remove Row"))
                 {
                     var picker = (Picker)s;
                     var rowToBeRemoved = Grid.GetRow(picker);
@@ -441,7 +479,8 @@ namespace ScoutingDemo
                         bool canCovert = Int32.TryParse(oldTitle.Substring(0, 1), out int newNumber);
                         if (canCovert)
                         {
-                            newTitle = (newNumber - 1) + "rd piece";
+                            addon = ((newNumber - 1) > 3) ? "th Piece" : "rd Piece";
+                            newTitle = (newNumber - 1) + addon;
                             modifiedChild.Title = newTitle;
                         }
                         Grid.SetRow(modifiedChild, Grid.GetRow(child) - 1);
@@ -459,19 +498,22 @@ namespace ScoutingDemo
 
             p2.SelectedIndexChanged += (s, e) =>
             {
-                if (scoredPlaces.Count > (Grid.GetRow(p2) + 1))
+                if (p2.SelectedIndex != -1)
                 {
-                    scoredPlaces.RemoveAt((Grid.GetRow(p1) + 1));
+                    if (scoredPlaces.Count > (Grid.GetRow(p2) + 1))
+                    {
+                        scoredPlaces.RemoveAt((Grid.GetRow(p1) + 1));
+                    }
+                    scoredPlaces.Insert((Grid.GetRow(p1) + 1), p2.Items[p2.SelectedIndex]);
+                    printList();
                 }
-                scoredPlaces.Insert((Grid.GetRow(p1) + 1), p2.Items[p2.SelectedIndex]);
-                printList();
             };
 
             p2.Unfocused += (s, e) =>
             {
                 if (p2.SelectedIndex != -1)
                 {
-                    if ((count - 2) == LastGrid.RowDefinitions.Count)
+                    if ((Grid.GetRow(p2) + 1) == LastGrid.RowDefinitions.Count)
                     {
                         addRow();
                     }

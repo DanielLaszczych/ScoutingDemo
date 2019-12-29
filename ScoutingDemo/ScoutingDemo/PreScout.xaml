@@ -10,7 +10,7 @@
         <ScrollView>
             <StackLayout x:Name="Layout">
                 <Picker x:Name="pckName" HorizontalOptions="Center" 
-                        Title="Pick Name" Margin="10"/>
+                        Title="Pick Name" Margin="0, 20, 0, 10"/>
                 <Picker x:Name="pckTeam" HorizontalOptions="Center" 
                         Title="Pick Team" Margin="10"/>
                 <Picker x:Name="pckAlliance" HorizontalOptions="Center" 

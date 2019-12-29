@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ScoutingDemo.TeleScout"
+             Title="Teleop">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout x:Name="Layout">
+                
+                <Label x:Name="hatchCShipLabel" Text="Hatch Panel Placed (Cargoship): 0" Margin="25, 20, 0, 0"/>
+                <Stepper x:Name="hatchCShip" Maximum="8" Minimum="0" Increment="1" 
+                             Value="0" HorizontalOptions="Center" Margin="0, 20, 0, 0"/>
+
+                <Label x:Name="cargoCShipLabel" Text="Cargo Placed (Cargoship): 0" Margin="25, 20, 0, 0"/>
+                <Stepper x:Name="cargoCShip" HorizontalOptions="CenterAndExpand" Maximum="8" Minimum="0" Increment="1" 
+                             Value="0" Margin="0, 20, 0, 0"/>
+
+                <Label x:Name="hatchRShipLabel"  Text="Hatch Panel Placed (Left and Right Rocketship): 0" Margin="25, 20, 0, 0"/>
+                <Stepper x:Name="hatchRShip" Maximum="12" Minimum="0" Increment="1" 
+                             Value="0" HorizontalOptions="Center" Margin="0, 20, 0, 0"/>
+
+                <Label x:Name="cargoRShipLabel" Text="Cargo Placed (Left and Right Rocketship): 0" Margin="25, 20, 0, 0"/>
+                <Stepper x:Name="cargoRShip" Maximum="12" Minimum="0" Increment="1" 
+                            Value="0" HorizontalOptions="Center" Margin="0, 20, 0, 0"/>
+
+
+                <Label x:Name="rocketSoloLabel" Text="Did they complete a rocket solo?" Margin="25, 20, 0, 0"/>
+
+                <Grid HorizontalOptions="CenterAndExpand" ColumnSpacing="20" RowSpacing="25" Margin="0, 20, 0, 20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btnYesSolo" Grid.Row="0"  Grid.Column="0" BackgroundColor="Green" 
+                            TextColor="Black" Text="Yes" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+                    <Button x:Name="btnNoSolo" Grid.Row="0"  Grid.Column="1" BackgroundColor="Red" 
+                            TextColor="Black" Text="No" Opacity="0.5" CornerRadius="10" BorderWidth="5"/>
+
+                </Grid>
+                <Button x:Name="btnNextTele" HorizontalOptions="Center" 
+                    Text="Next" IsEnabled="false" BackgroundColor="LightGreen" 
+                    TextColor="Black" CornerRadius="10" IsVisible="false" Margin="0, 0, 0, 10"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

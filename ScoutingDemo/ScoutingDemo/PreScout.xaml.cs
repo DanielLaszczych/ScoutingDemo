@@ -12,9 +12,12 @@ namespace ScoutingDemo
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PreScout : ContentPage
     {
+
+        public AutoScout autoScout = null;
+
         private readonly List<String> names = new List<string>
         {
-            "Daniel", "Raymond", "Tia",
+              "Daniel", "Raymond", "Tia",
             "Peter", "Udayan", "Mohammed",
             "Brandon", "Ali", "Potato",
             "RoboTigers", "Cup", "Frank"
@@ -33,19 +36,20 @@ namespace ScoutingDemo
         public PreScout()
         {
             InitializeComponent();
+            DynamicSizing();
+            InitializeControls();
             hasName = false;
             hasTeam = false;
             hasAlliance = false;
             hasMatch = false;
-            DynamicSizing();
-            InitializeControls();
             btnNextPre.Clicked += async (s, e) =>
             {
-                HomePage.data.SelectedName = pckName.Items[pckName.SelectedIndex];
-                HomePage.data.SelectedAlliance = pckAlliance.Items[pckAlliance.SelectedIndex];
-                HomePage.data.SelectedTeam = Int32.Parse(pckTeam.Items[pckTeam.SelectedIndex]);
                 HomePage.data.MatchNumber = Int32.Parse(entMatch.Text);
-                await Navigation.PushAsync(HomePage.autoScout, true);
+                if (autoScout == null)
+                {
+                    autoScout = new AutoScout();
+                }
+                await Navigation.PushAsync(autoScout, true);
             };
         }
 
@@ -88,6 +92,7 @@ namespace ScoutingDemo
             {
                 if (pckName.SelectedIndex != -1)
                 {
+                    HomePage.data.SelectedName = pckName.Items[pckName.SelectedIndex];
                     hasName = true;
                     enableButton();
                 }
@@ -97,6 +102,7 @@ namespace ScoutingDemo
             {
                 if (pckTeam.SelectedIndex != -1)
                 {
+                    HomePage.data.SelectedTeam = Int32.Parse(pckTeam.Items[pckTeam.SelectedIndex]);
                     hasTeam = true;
                     enableButton();
                 }
@@ -106,6 +112,7 @@ namespace ScoutingDemo
             {
                 if (pckAlliance.SelectedIndex != -1)
                 {
+                    HomePage.data.SelectedAlliance = pckAlliance.Items[pckAlliance.SelectedIndex];
                     hasAlliance = true;
                     enableButton();
                 }

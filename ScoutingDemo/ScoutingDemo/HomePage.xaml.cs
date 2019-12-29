@@ -14,8 +14,7 @@ namespace ScoutingDemo
     public partial class HomePage : ContentPage
     {
 
-        public static PreScout preScout;
-        public static AutoScout autoScout;
+        public PreScout preScout;
         public static Data data;
 
         public HomePage()
@@ -33,7 +32,6 @@ namespace ScoutingDemo
             {
                 data = new Data();
                 preScout = new PreScout();
-                autoScout = new AutoScout();
                 await Navigation.PushAsync(preScout, true);
             };
         }

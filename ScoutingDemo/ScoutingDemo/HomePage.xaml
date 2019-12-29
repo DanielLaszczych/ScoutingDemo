@@ -7,12 +7,12 @@
              x:Class="ScoutingDemo.HomePage"
              Title="Home">
 
-    <StackLayout>
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <!-- Place new controls here -->
         <Button x:Name="btnStart" 
                 Text="Start Scouting" 
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="Center"
+                VerticalOptions="Center" 
                 CornerRadius="10"
                 BackgroundColor="LightBlue"
                 TextColor="Black"/>
