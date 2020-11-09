@@ -19,4 +19,8 @@ A demo for a FRC scouting app using Microsoft's Xamarin
 
 ## Examples
 
-### 
+### Teleop Screen
+![Teleop Screen](screenshots/Screenshot1.jpg)
+
+### Auto Screen
+![Auto Screen](screenshots/Screenshot2.jpg)
