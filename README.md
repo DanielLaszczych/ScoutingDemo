@@ -6,11 +6,11 @@ A demo for a FRC scouting app using Microsoft's Xamarin
 
 ## Features
 
-- Allows the user the input data about a match
+- Allows the user to input data about a match
 - Enter autonomous data
 - Enter teleop data
 - Uses interactive methods to input data
-- Make sure the users has inputed all required data before submitting
+- Makes sure the user has inputed all the required data before submitting
 - Submits the data to a google spreadsheet
 
 ## Setup
